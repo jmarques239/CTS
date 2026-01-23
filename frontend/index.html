@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTS | Code Test Studio</title>
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="/assets/cts-logo.svg">
+    <link rel="apple-touch-icon" href="/assets/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" />
+    <link rel="stylesheet" href="/frontend/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-logo">
+                <img src="/assets/cts-logo.svg" alt="CTS Logo" width="64" height="40">
+                <h1>CTS <span>Code Test Studio</span></h1>
+            </div>
+            <p class="subtitle">Universal Test System - Output Comparison</p>
+        </header>
+
+        <div class="theme-switch-container">
+            <button id="themeToggle" class="theme-switch" title="Toggle Dark Mode">
+                <span class="material-symbols-outlined">dark_mode</span>
+                <span>Theme</span>
+            </button>
+        </div>
+
+        <div class="tab-system">
+            <nav class="tab-navigation">
+                <button class="tab-button active" data-tab="main">
+                    <span class="tab-icon"><span class="material-symbols-outlined">code_blocks</span></span>
+                    <span class="tab-text">Main</span>
+                </button>
+                <button class="tab-button" data-tab="results">
+                    <span class="tab-icon"><span class="material-symbols-outlined">monitoring</span></span>
+                    <span class="tab-text">Results</span>
+                </button>
+                <button class="tab-button" data-tab="help">
+                    <span class="tab-icon"><span class="material-symbols-outlined">help</span></span>
+                    <span class="tab-text">Help</span>
+                </button>
+            </nav>
+
+            <div class="tab-content">
+                <div class="tab-panel active" id="main-tab">
+                    <section class="main-section">
+                        <h2><span class="material-symbols-outlined">code_blocks</span>Load Source / Executable</h2>
+                        <div class="file-controls">
+                            <button id="loadFileBtn" class="btn btn-primary"><span class="material-symbols-outlined">file_upload</span>Load File</button>
+                            <button id="reloadFileBtn" class="btn btn-outline disabled" disabled><span class="material-symbols-outlined">refresh</span>Reload</button>
+                        </div>
+                    </section>
+
+                    <section class="main-section">
+                        <h2><span class="material-symbols-outlined">assignment</span>Load Tests</h2>
+                        <div class="file-controls">
+                            <button id="loadTestFileBtn" class="btn btn-primary"><span class="material-symbols-outlined">playlist_add</span>Import Multiple Tests</button>
+                            <button id="reloadTestFileBtn" class="btn btn-outline disabled" disabled><span class="material-symbols-outlined">refresh</span>Reload</button>
+                        </div>
+                    </section>
+
+                    <section class="main-section">
+                        <h2><span class="material-symbols-outlined">folder_open</span>Active Files</h2>
+                        <div class="persistent-status-area">
+                            <div class="persistent-status-header">
+                                <span class="material-symbols-outlined">info</span>
+                                <span>Active Files Status</span>
+                            </div>
+                            <div id="sourceFileStatus" class="persistent-status-item">
+                                <span class="material-symbols-outlined status-icon">circle</span>
+                                <span class="status-icon">Source: <em>No file loaded</em></span>
+                            </div>
+                            <div id="testFileStatusPermanent" class="persistent-status-item">
+                                <span class="material-symbols-outlined status-icon">circle</span>
+                                <span class="status-icon">Tests: <em>No test file loaded</em></span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="main-section">
+                        <h2><span class="material-symbols-outlined">playlist_play</span>Test Controls & Loaded Tests</h2>
+                        
+                        <div class="test-controls-header">
+                            <div class="test-controls">
+                                <button id="addTestBtn" class="btn btn-secondary"><span class="material-symbols-outlined">add</span>Add Test</button>
+                                <button id="clearAllBtn" class="btn btn-outline"><span class="material-symbols-outlined">delete</span>Clear All</button>
+                                <button id="exportTestsBtn" class="btn btn-outline"><span class="material-symbols-outlined">file_download</span>Export Tests</button>
+                                <button id="runTestsBtn" class="btn btn-success"><span class="material-symbols-outlined">play_arrow</span>Run All Tests</button>
+                            </div>
+                            <div class="tests-count">Total: <span id="testsCount">0</span> tests</div>
+                        </div>
+
+                        <div class="tests-scroll-container">
+                            <div id="testsContainer">
+                                <div class="empty-state">Import a test file or add tests manually</div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="tab-panel" id="results-tab">
+                    <section class="results-section">
+                        <h2><span class="material-symbols-outlined">monitoring</span>Results</h2>
+                        <div class="results-controls">
+                            <button id="exportResultsBtn" class="btn btn-outline"><span class="material-symbols-outlined">file_download</span>Export Results</button>
+                            <button id="clearResultsBtn" class="btn btn-outline"><span class="material-symbols-outlined">delete</span>Clear Results</button>
+                        </div>
+                        <div id="resultsContainer" class="results-container">
+                            <div class="empty-state">Run tests to see results here</div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="tab-panel" id="help-tab">
+                    <div class="help-content">
+                        <section class="main-section">
+                            <h2><span class="material-symbols-outlined">play_arrow</span>Quick Start</h2>
+                            <ol style="padding-left: 24px; margin-bottom: 0;">
+                                <li><strong>Load Source/Executable:</strong> Upload C file or pre-compiled executable</li>
+                                <li><strong>Import Multiple Tests:</strong> Use files exported by CTS (skip if you don't have any)</li>
+                                <li><strong>Create Tests:</strong> Add tests manually using "Add Test" button, then export for later use</li>
+                                <li><strong>Run Tests:</strong> Execute all tests automatically</li>
+                                <li><strong>Analyze Results:</strong> View detailed comparison and errors</li>
+                            </ol>
+                        </section>
+
+                        <section class="main-section">
+                            <h2><span class="material-symbols-outlined">lightbulb</span>Important Tips</h2>
+                            <ul style="padding-left: 24px; margin-bottom: 0;">
+                                <li><strong>Test Files:</strong> Only files exported by CTS are guaranteed to work correctly</li>
+                                <li><strong>File Management:</strong> Use "Reload" when files are modified externally</li>
+                                <li><strong>Auto Detection:</strong> System automatically detects file changes</li>
+                            </ul>
+                        </section>
+
+                        <section class="main-section">
+                            <h2><span class="material-symbols-outlined">description</span>Complete Documentation</h2>
+                            <p style="margin-bottom: 16px;">For detailed information, advanced features, and troubleshooting:</p>
+                            <a href="./README.md" target="_blank" class="btn btn-primary">
+                                <span class="material-symbols-outlined">description</span>
+                                View Full README.md
+                            </a>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="overlay" class="overlay hidden"></div>
+        <div id="progressModal" class="progress-modal hidden">
+            <h3>Running Tests</h3>
+            <div class="progress-bar-modal">
+                <div id="progressFillModal" class="progress-fill-modal"></div>
+            </div>
+            <div id="progressTextModal" class="progress-text-modal"></div>
+            <div id="progressPercentage" class="progress-percentage">0%</div>
+        </div>
+    </div>
+
+    <script src="/frontend/test_parser.js"></script>
+    <script src="/frontend/validator.js"></script>
+</body>
+</html>
